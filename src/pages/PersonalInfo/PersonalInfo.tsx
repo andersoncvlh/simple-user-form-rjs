@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, TextField, FormControlLabel, Checkbox, Typography } from "@material-ui/core";
 
-function InformacaoPessoal() {
+function PersonalInfo() {
     
   return (
     <React.Fragment>
@@ -98,4 +98,4 @@ function InformacaoPessoal() {
     </React.Fragment>
   );
 }
-export default InformacaoPessoal;
+export default PersonalInfo;

@@ -13,7 +13,7 @@ const useStyles = makeStyles({
   }
 });
 
-function CardProduto(props: Produto) {
+function ProductCard(props: ProductDTO) {
 
   const [state, setState] = React.useState({
     checkedProduto: false
@@ -53,15 +53,15 @@ function CardProduto(props: Produto) {
     </Card>
   );
 }
-export default CardProduto;
+export default ProductCard;
 
-export class Produto {
+export class ProductDTO {
   name!: string;
   desc!: string;
   price!: number;
   selected?: boolean;
 
-  constructor(init: Partial<Produto>) {
+  constructor(init: Partial<ProductDTO>) {
     Object.assign(this, init);
   }
 }

@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Revisar() {
+function ReviewOrder() {
   const classes = useStyles();
 
   return (
@@ -84,4 +84,4 @@ function Revisar() {
     </React.Fragment>
   );
 }
-export default Revisar;
+export default ReviewOrder;

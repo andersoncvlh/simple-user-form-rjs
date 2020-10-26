@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Inicio from './pages/Inicio/Inicio';
+import Inicio from './pages/Home/Home';
 
 function App() {
   return (

@@ -10,10 +10,10 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import InformacaoPessoal from '../InformacoesPessoais/InformacoesPessoais';
-import Pagamento from '../Pagamento/Pagamento';
-import Revisar from '../Revisar/Revisar';
-import Cobertura from '../Cobertura/Cobertura';
+import PersonalInfo from '../PersonalInfo/PersonalInfo';
+import ReviewOrder from '../ReviewOrder/ReviewOrder';
+import Products from '../Products/Products';
+import Payment from '../Payment/Payment';
 
 function Copyright() {
   return (
@@ -65,24 +65,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const steps = ['Personal information', 'Coverage', 'Payment details', 'Review your order']
+const steps = ['Personal information', 'Products', 'Payment details', 'Review your order']
 
 function getStepContent(step: number) {
   switch (step) {
     case 0:
-      return <InformacaoPessoal />
+      return <PersonalInfo />
     case 1:
-      return <Cobertura />
+      return <Products />
     case 2:
-      return <Pagamento />
+      return <Payment />
     case 3:
-      return <Revisar />
+      return <ReviewOrder />
     default:
       throw new Error('Unknown step')
   }
 }
 
-function Inicio() {
+function Home() {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
 
@@ -154,4 +154,4 @@ function Inicio() {
     </React.Fragment>
   )
 }
-export default Inicio;
+export default Home;
