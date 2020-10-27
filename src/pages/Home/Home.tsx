@@ -80,33 +80,7 @@ class Home extends React.Component<any, any> {
     this.state = {
       activeStep: 0,
       price: null,
-      products: [
-        {
-          name: "Product 1",
-          desc: "A nice thing",
-          price: 9.99,
-          selected: false,
-        },
-        {
-          name: "Product 2",
-          desc: "Another thing",
-          price: 3.45,
-          selected: false,
-        },
-        {
-          name: "Product 3",
-          desc: "Something else",
-          price: 6.51,
-          selected: false,
-        },
-        {
-          name: "Product 4",
-          desc: "Best thing of all",
-          price: 14.11,
-          selected: false,
-        },
-        { name: "Shipping", desc: "", price: 0, selected: false },
-      ],
+      products: [],
     };
   }
 
@@ -170,6 +144,16 @@ class Home extends React.Component<any, any> {
     return parseFloat(total.toFixed(2));
   };
 
+  async componentDidMount() {
+    const response = await fetch('/api/v1/products');
+    const data = await response.json();
+    this.setState(() => {
+      return {
+        products: data.products
+      };
+    });
+  }
+
   render() {
     const { classes } = this.props;
     const setActiveStep = (newValue: number) => {
@@ -187,7 +171,7 @@ class Home extends React.Component<any, any> {
     const handleBack = () => {
       setActiveStep(activeStep - 1);
     };
-
+    
     return (
       <React.Fragment>
         <CssBaseline />
