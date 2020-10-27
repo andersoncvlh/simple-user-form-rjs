@@ -1,112 +1,193 @@
 import React from "react";
-import { createStyles, withStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
-import PersonalInfo from '../PersonalInfo/PersonalInfo';
-import ReviewOrder from '../ReviewOrder/ReviewOrder';
-import Products from '../Products/Products';
-import Payment from '../Payment/Payment';
+import { createStyles, withStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Paper from "@material-ui/core/Paper";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
+import PersonalInfo from "../PersonalInfo/PersonalInfo";
+import ReviewOrder from "../ReviewOrder/ReviewOrder";
+import Products from "../Products/Products";
+import Payment from "../Payment/Payment";
+import { ProductDTO } from "../Products/ProductCard";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
-  )
+  );
 }
 
-const styles = (theme: any) => createStyles({
-  appBar: {
-    position: 'relative',
-  },
-  layout: {
-    width: 'auto',
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
-      width: 880,
-      marginLeft: 'auto',
-      marginRight: 'auto',
+const styles = (theme: any) =>
+  createStyles({
+    appBar: {
+      position: "relative",
     },
-  },
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing() * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
+    layout: {
+      width: "auto",
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+        width: 880,
+        marginLeft: "auto",
+        marginRight: "auto",
+      },
     },
-  },
-  stepper: {
-    padding: theme.spacing(3, 0, 5),
-  },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
-  button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
-  },
-});
+    paper: {
+      marginTop: theme.spacing(3),
+      marginBottom: theme.spacing(3),
+      padding: theme.spacing(2),
+      [theme.breakpoints.up(600 + theme.spacing() * 2)]: {
+        marginTop: theme.spacing(6),
+        marginBottom: theme.spacing(6),
+        padding: theme.spacing(3),
+      },
+    },
+    stepper: {
+      padding: theme.spacing(3, 0, 5),
+    },
+    buttons: {
+      display: "flex",
+      justifyContent: "flex-end",
+    },
+    button: {
+      marginTop: theme.spacing(3),
+      marginLeft: theme.spacing(1),
+    },
+  });
 
-const steps = ['Personal information', 'Products', 'Payment details', 'Review your order']
-
-function getStepContent(step: number) {
-  switch (step) {
-    case 0:
-      return <PersonalInfo />
-    case 1:
-      return <Products />
-    case 2:
-      return <Payment />
-    case 3:
-      return <ReviewOrder />
-    default:
-      throw new Error('Unknown step')
-  }
-}
+const steps = [
+  "Personal information",
+  "Products",
+  "Payment details",
+  "Review your order",
+];
 
 class Home extends React.Component<any, any> {
-
   constructor(props: any) {
     super(props);
     this.state = {
-      activeStep: 0
-    }
+      activeStep: 0,
+      price: null,
+      products: [
+        {
+          name: "Product 1",
+          desc: "A nice thing",
+          price: 9.99,
+          selected: false,
+        },
+        {
+          name: "Product 2",
+          desc: "Another thing",
+          price: 3.45,
+          selected: false,
+        },
+        {
+          name: "Product 3",
+          desc: "Something else",
+          price: 6.51,
+          selected: false,
+        },
+        {
+          name: "Product 4",
+          desc: "Best thing of all",
+          price: 14.11,
+          selected: false,
+        },
+        { name: "Shipping", desc: "", price: 0, selected: false },
+      ],
+    };
   }
+
+  getStepContent = (step: number) => {
+    switch (step) {
+      case 0:
+        return <PersonalInfo />;
+      case 1:
+        return (
+          <Products
+            onChange={this.handleChange}
+            products={this.state.products}
+            price={this.state.price}
+          />
+        );
+      case 2:
+        return <Payment />;
+      case 3:
+        return <ReviewOrder />;
+      default:
+        throw new Error("Unknown step");
+    }
+  };
+
+  handleChange = (selectedProduct: ProductDTO): any => {
+    const newProducts = this.state.products.slice();
+    const index = newProducts.indexOf(selectedProduct);
+    if (-1 === index) {
+      console.log("Não encontrado");
+      return;
+    }
+    selectedProduct.selected = !selectedProduct.selected;
+    newProducts.splice(index, 1, selectedProduct);
+    const price = this.calculatePriceOfSelected();
+    this.setState(() => {
+      return {
+        products: newProducts,
+        price
+      };
+    });
+  };
+
+  getSelectedProductsCount = () => {
+    const selectedList = this.state.products.filter(
+      (pdt: ProductDTO) => pdt.selected
+    );
+    return selectedList.length < 1 ? "" : selectedList.length;
+  };
+
+  calculatePriceOfSelected = (): number => {
+    let total = 0;
+    const selectedList = this.state.products.filter(
+      (pdt: ProductDTO) => pdt.selected
+    );
+
+    if (selectedList && selectedList.length > 0) {
+      total = selectedList
+        .map((product: ProductDTO) => product.price)
+        .reduce((pdt1: number, pdt2: number) => pdt1 + pdt2);
+    }
+    return parseFloat(total.toFixed(2));
+  };
 
   render() {
     const { classes } = this.props;
-    const setActiveStep = (newValue: number) => { 
-      this.setState({
-        activeStep: newValue
+    const setActiveStep = (newValue: number) => {
+      this.setState(() => {
+        return {
+          activeStep: newValue
+        }
       });
     };
     const activeStep = this.state.activeStep;
     const handleNext = () => {
-      setActiveStep(activeStep + 1)
-    }
-  
+      setActiveStep(activeStep + 1);
+    };
+
     const handleBack = () => {
-      setActiveStep(activeStep - 1)
-    }
-  
+      setActiveStep(activeStep - 1);
+    };
+
     return (
       <React.Fragment>
         <CssBaseline />
@@ -136,13 +217,14 @@ class Home extends React.Component<any, any> {
                     Thank you for your order.
                   </Typography>
                   <Typography variant="subtitle1">
-                    Your order number is #2001539. We have emailed your order confirmation, and will
-                    send you an update when your order has shipped.
+                    Your order number is #2001539. We have emailed your order
+                    confirmation, and will send you an update when your order
+                    has shipped.
                   </Typography>
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {getStepContent(activeStep)}
+                  {this.getStepContent(activeStep)}
                   <div className={classes.buttons}>
                     {activeStep !== 0 && (
                       <Button onClick={handleBack} className={classes.button}>
@@ -155,7 +237,7 @@ class Home extends React.Component<any, any> {
                       onClick={handleNext}
                       className={classes.button}
                     >
-                      {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                      {activeStep === steps.length - 1 ? "Place order" : "Next"}
                     </Button>
                   </div>
                 </React.Fragment>
@@ -167,6 +249,5 @@ class Home extends React.Component<any, any> {
       </React.Fragment>
     );
   }
-
 }
 export default withStyles(styles, { withTheme: true })(Home);

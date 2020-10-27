@@ -10,10 +10,13 @@ import { Switch } from "@material-ui/core";
 const useStyles = makeStyles({
   cardItem: {
     maxWidth: 400,
-  }
+  },
 });
 
-function ProductCard(props: { product: ProductDTO, onChange: (event: any) => void }) {
+const ProductCard = (props: {
+  product: ProductDTO;
+  onChange: (event: any) => any;
+}) => {
   const classes = useStyles();
 
   return (
@@ -24,10 +27,10 @@ function ProductCard(props: { product: ProductDTO, onChange: (event: any) => voi
             {props.product.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            R$ { props.product.price } 
+            R$ {props.product.price}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            { props.product.desc } 
+            {props.product.desc}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -42,7 +45,7 @@ function ProductCard(props: { product: ProductDTO, onChange: (event: any) => voi
       </CardActions>
     </Card>
   );
-}
+};
 export default ProductCard;
 
 export class ProductDTO {
