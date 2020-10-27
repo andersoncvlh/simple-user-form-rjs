@@ -13,38 +13,28 @@ const useStyles = makeStyles({
   }
 });
 
-function ProductCard(props: ProductDTO) {
-
-  const [state, setState] = React.useState({
-    checkedProduto: false
-  });
-
+function ProductCard(props: { product: ProductDTO, onChange: (event: any) => void }) {
   const classes = useStyles();
-
-  const handleChange = (event: any) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-    props.selected = event.target.checked;
-  };
 
   return (
     <Card className={classes.cardItem}>
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.name}
+            {props.product.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            R$ { props.price } 
+            R$ { props.product.price } 
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            { props.desc } 
+            { props.product.desc } 
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Switch
-          checked={state.checkedProduto}
-          onChange={handleChange}
+          checked={props.product.selected}
+          onChange={props.onChange}
           color="primary"
           name="checkedProduto"
           inputProps={{ "aria-label": "primary checkbox" }}
