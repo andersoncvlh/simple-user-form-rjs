@@ -1,0 +1,12 @@
+{
+  "/_app": "pages/_app.js",
+  "/": "pages/index.html",
+  "/payment/payment": "pages/payment/payment.html",
+  "/personalInfo/personalInfo": "pages/personalInfo/personalInfo.html",
+  "/products/products": "pages/products/products.js",
+  "/quotation/quotation": "pages/quotation/quotation.js",
+  "/reviewOrder/reviewOrder": "pages/reviewOrder/reviewOrder.html",
+  "/_error": "pages/_error.js",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
+}

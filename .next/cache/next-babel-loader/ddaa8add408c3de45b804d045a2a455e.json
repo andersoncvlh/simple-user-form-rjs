@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { jsx as _jsx } from \"react/jsx-runtime\";\nimport { Home } from '@material-ui/icons';\nimport React from 'react';\nimport './app.css';\n\nfunction App() {\n  return /*#__PURE__*/_jsx(Home, {});\n}\n\nexport default App;","map":null,"metadata":{},"sourceType":"module"}
